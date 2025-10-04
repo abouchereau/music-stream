@@ -1,0 +1,4 @@
+node_modules/
+playlists/*
+!playlists/
+!playlists/init

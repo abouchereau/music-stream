@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Plyr avec playlist</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    body {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      background-color:#63A3A5;
+      background-image: url('https://i.scdn.co/image/ab67616d00001e02192e6e04d4af249b001d2d35');
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      height:100vh;
+    }
+    .playlist { list-style: none; padding: 0; }
+    .playlist li { cursor: pointer; padding: 5px;background: rgba(255,255,255,0.8); }
+    .playlist li:hover { cursor: pointer; padding: 5px;background: rgba(255,255,255,1); }
+    .playlist li.active { background: rgba(255,255,255,1); }
+    .track-meta { font-size: 0.9em; color: #666; }
+    h1 {text-align:center;}
+  </style>
+</head>
+<body>
+  <h1>Suck Da Head - Demo</h1>
+
+  <!-- Player -->
+  <audio id="player"  controls controlsList="nodownload" oncontextmenu="return false;"></audio>
+
+  <!-- Playlist -->
+  <ul class="playlist" id="playlist">
+  </ul>
+
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script>
+
+    let playlistDir = window.location.pathname.slice(1);
+    if(playlistDir == "") {
+      playlistDir = "%20";
+    }
+    const API_URL = location.hostname=="localhost"?"http://localhost:3616":"https://node-player.lasaugrenue.fr"; 
+    const player = new Plyr('#player');
+    const playlist = document.getElementById('playlist');
+    let current = 0;
+
+    const loadTrack = async (index) => {
+      const token = await fetch(API_URL+"/token");
+      const items = playlist.querySelectorAll('li');
+      items.forEach(li => li.classList.remove('active'));
+      const curLi = Array.from(items).find(li => li.dataset.index==index)
+      curLi.classList.add('active');
+
+      player.source = {
+        type: 'audio',
+        sources: [
+          {
+            src: API_URL+"/stream/"+(await token.text())+"/"+playlistDir+"/"+index,
+            type: 'audio/mpeg'
+          }
+        ]
+      };
+      current = index;
+      player.play();
+    }
+
+
+
+
+    // Quand la piste se termine → jouer la suivante
+    player.on('ended', () => {
+      loadTrack((current + 1) % items.length);
+    });
+
+
+  const loadTrackList = async () => {
+    let res = await fetch(API_URL+"/tracks/"+playlistDir, {
+              method: 'GET',
+              headers: {
+              'Content-Type': 'application/json'
+              }
+          });
+          tracks = await res.json();
+
+        tracks.forEach((track, index) => {
+          const li = document.createElement('li');
+          li.setAttribute("data-index", index);
+          li.innerHTML = `
+            <div><strong>${track.title}</strong> – ${track.artist || 'Inconnu'}</div>
+            <div class="track-meta">${formatDuration(track.duration)}</div>
+          `;
+          li.addEventListener('click', e => loadTrack(e.currentTarget.dataset.index));
+          playlist.appendChild(li);
+        });
+        // Charger la première piste
+        if (tracks.length > 0) {
+          loadTrack(0);
+        }
+  };
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadTrackList();
+}, false);
+
+    player.on('ended', () => {
+      const next = (current + 1) % tracks.length;
+      loadTrack(next);
+    });
+
+    function formatDuration(sec) {
+      if (!sec) return '';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+  </script>
+</body>
+</html>

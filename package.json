@@ -2,11 +2,17 @@
   "name": "music-stream",
   "version": "1.0.0",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
   "author": "",
+  "type": "module",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "music-metadata": "^11.9.0"
+  },
+  "scripts": {
+    "back": "node src/server.js",
+    "front": "http-server public -p 8123 -P http://localhost:8123?"
+  }
 }
