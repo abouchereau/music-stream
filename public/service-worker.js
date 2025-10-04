@@ -24,7 +24,7 @@ async function handleProtectedAudio(originalRequest) {
     const tokenResp = await fetch(API_URL+"/token");
     const tokenStr = await tokenResp.text();
     url = url.replace("/stream/", "/stream/"+tokenStr+"/");
-
+    console.log("new URL",url);
     const headers = {};
     if (originalRequest.headers.has('range')) {
       headers['range'] = originalRequest.headers.get('range');
