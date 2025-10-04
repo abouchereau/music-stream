@@ -9,7 +9,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
-
+    console.log("URL",url.pathname);
   if (url.pathname.startsWith('/stream')) {
     event.respondWith(handleProtectedAudio(req));
   }
@@ -17,6 +17,7 @@ self.addEventListener('fetch', event => {
 
 
 async function handleProtectedAudio(originalRequest) {
+    console.log("handleProtectedAudio");
   try {
     let url = new URL(originalRequest.url);
     const API_URL = "https://node-player.lasaugrenue.fr"; 
