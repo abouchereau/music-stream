@@ -1,0 +1,42 @@
+self.addEventListener('install', event => {
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', event => {
+  const req = event.request;
+  const url = new URL(req.url);
+
+  if (url.pathname.startsWith('/stream')) {
+    event.respondWith(handleProtectedAudio(req));
+  }
+});
+
+
+async function handleProtectedAudio(originalRequest) {
+  try {
+    let url = new URL(originalRequest.url);
+    const API_URL = "https://node-player.lasaugrenue.fr"; 
+    const tokenResp = await fetch(API_URL+"/token");
+    const tokenStr = await tokenResp.text();
+    url = url.replace("/stream/", "/stream/"+tokenStr+"/");
+
+    const headers = {};
+    if (originalRequest.headers.has('range')) {
+      headers['range'] = originalRequest.headers.get('range');
+    }
+    if (originalRequest.headers.has('accept')) {
+      headers['accept'] = originalRequest.headers.get('accept');
+    }
+    const resp = await fetch(url, {
+      method: 'GET',
+      headers,
+    });
+    return resp;
+  } catch (err) {
+    return new Response('Service worker error', { status: 500 });
+  }
+}

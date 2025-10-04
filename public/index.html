@@ -35,6 +35,12 @@
   <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
   <script>
 
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log('SW registered', reg))
+        .catch(err => console.error('SW reg failed', err));
+    }
+
     let playlistDir = window.location.pathname.slice(1);
     if(playlistDir == "") {
       playlistDir = "%20";
@@ -45,7 +51,7 @@
     let current = 0;
 
     const loadTrack = async (index) => {
-      const token = await fetch(API_URL+"/token");
+//      const token = await fetch(API_URL+"/token");
       const items = playlist.querySelectorAll('li');
       items.forEach(li => li.classList.remove('active'));
       const curLi = Array.from(items).find(li => li.dataset.index==index)
@@ -55,7 +61,7 @@
         type: 'audio',
         sources: [
           {
-            src: API_URL+"/stream/"+(await token.text())+"/"+playlistDir+"/"+index,
+            src: API_URL+"/stream/"+/*(await token.text())+"/"+*/playlistDir+"/"+index,
             type: 'audio/mpeg'
           }
         ]

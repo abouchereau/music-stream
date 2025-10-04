@@ -48,8 +48,6 @@ app.get('/stream/:token/:playlist/:index', (req, res) => {
     return res.status(400).send('Bad request');
   }
 
-  console.log("ms", Date.now() - (token['expiration'] -TOKEN_EXPIRATION));
-
   if(token['expiration'] < Date.now()) {
     return res.status(400).send('Bad request');
   }
