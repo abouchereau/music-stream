@@ -23,7 +23,7 @@ async function handleProtectedAudio(originalRequest) {
     console.log("handleProtectedAudio", url);
     const API_URL = "https://node-player.lasaugrenue.fr"; 
     const tokenResp = await fetch(API_URL+"/token");
-    console.log("tokenStr",tokenStr);
+    console.log("tokenResp",tokenResp);
     const tokenStr = await tokenResp.text();
     console.log("tokenStr",tokenStr);
     url = url.replace("/stream/", "/stream/"+tokenStr+"/");
