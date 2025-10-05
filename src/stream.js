@@ -24,6 +24,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 
 
@@ -34,7 +35,7 @@ if (!fs.existsSync(ROOT_DIR)) {
 }
 
 
-app.get('/token', (req, res) => {
+app.get('/api/token', (req, res) => {
   deleteExpiredTokens();
   const token = generateRandomString();
   const expiration = Date.now()+TOKEN_EXPIRATION;
@@ -42,7 +43,8 @@ app.get('/token', (req, res) => {
   res.send(token);
 });
 
-app.get('/stream/:token/:playlist/:index', (req, res) => {
+
+app.get('/api/stream/:token/:playlist/:index', (req, res) => {
   const tokenStr = req.params.token;
   if (!tokenStr) {
       return res.status(400).send('Bad request');
@@ -70,6 +72,12 @@ app.get('/stream/:token/:playlist/:index', (req, res) => {
   const total = stat.size;
   // Support des requêtes Range (permet le seek)
   const range = req.headers.range;
+
+  res.set({
+  'Access-Control-Allow-Origin': 'https://player.lasaugrenue.fr',
+  'Access-Control-Allow-Credentials': 'true',
+  'Access-Control-Expose-Headers': 'Accept-Ranges, Content-Range, Content-Length'
+});
   if (range) {
     const parts = range.replace(/bytes=/, "").split("-");
     const start = parseInt(parts[0], 10);
@@ -84,9 +92,7 @@ app.get('/stream/:token/:playlist/:index', (req, res) => {
       'Accept-Ranges': 'bytes',
       'Content-Length': chunkSize,
       'Content-Type': 'audio/mpeg',
-      // inline -> navigateur peut lire directement
       'Content-Disposition': 'inline; filename="'+token+'"',
-      // Désactiver cache côté navigateur si nécessaire
       'Cache-Control': 'no-store'
     });
     const stream = fs.createReadStream(filePath, { start, end });
@@ -113,7 +119,7 @@ app.get('/stream/:token/:playlist/:index', (req, res) => {
   }
 });
 
-app.get('/tracks/:playlistDir', async (req, res) => {
+app.get('/api/tracks/:playlistDir', async (req, res) => {
   try {
 
     const MUSIC_DIR = ROOT_DIR+"/"+req.params.playlistDir.trim();
@@ -169,9 +175,9 @@ const generateRandomString = (length = 10) => {
     result += chars[randomIndex];
   }
   return result;
-}
+};
 
 const deleteExpiredTokens = () => {
   const now = Date.now();
-  tokens = tokens.filter(t => t.expiration < now);
+  tokens = tokens.filter(t => t.expiration > now);
 };

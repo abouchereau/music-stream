@@ -27,8 +27,11 @@ async function handleProtectedAudio(originalRequest) {
     }
     if (originalRequest.headers.has('accept')) {
       headers['accept'] = originalRequest.headers.get('accept');
+    }    
+    if (originalRequest.headers.has('authorization')) {
+      headers['authorization'] = originalRequest.headers.get('authorization');
     }
-    
+
     let url = new URL(originalRequest.url);
     console.log("handleProtectedAudio", url);
     const API_URL = "https://node-player.lasaugrenue.fr"; 
