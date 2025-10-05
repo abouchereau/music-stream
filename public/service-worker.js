@@ -38,8 +38,6 @@ async function handleProtectedAudio(originalRequest) {
     const tokenResp = await fetch(API_URL+"/token",{
       method: 'GET',
       headers,          
-      mode: 'cors',
-      credentials: 'include'
     });
     console.log("tokenResp",tokenResp);
     const tokenStr = await tokenResp.text();
@@ -50,8 +48,6 @@ async function handleProtectedAudio(originalRequest) {
     const resp = await fetch(newUrl, {
       method: 'GET',
       headers,          
-      mode: 'cors',
-      credentials: 'include'
     });
     return resp;
   } catch (err) {
