@@ -1,17 +1,20 @@
- if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js?t='+Date.now(),{scope: '/'})
-        .then(reg => console.log('SW registered', reg))
-        .catch(err => console.error('SW reg failed', err));
-    }
 
     let playlistDir = window.location.pathname.slice(1);
     if(playlistDir == "") {
       playlistDir = "%20";
+    } 
+ 
+ if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js?t='+Date.now(),{scope: '/'+playlistDir})
+        .then(reg => console.log('SW registered', reg))
+        .catch(err => console.error('SW reg failed', err));
     }
+
     const API_URL = "/api"; 
     const player = new Plyr('#player');
     const playlist = document.getElementById('playlist');
     let current = 0;
+    let tracks = [];
 
     const loadTrack = async (index) => {
 //      const token = await fetch(API_URL+"/token");
