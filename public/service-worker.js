@@ -7,6 +7,7 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  console.log("SW FETCH")
   const req = event.request;
   const url = new URL(req.url);
     console.log("URL",url.pathname);
