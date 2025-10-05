@@ -8,7 +8,7 @@
     if(playlistDir == "") {
       playlistDir = "%20";
     }
-    const API_URL = location.hostname=="localhost"?"http://localhost:3616":"https://node-player.lasaugrenue.fr"; 
+    const API_URL = "/api"; 
     const player = new Plyr('#player');
     const playlist = document.getElementById('playlist');
     let current = 0;
