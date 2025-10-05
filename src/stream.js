@@ -15,12 +15,12 @@ const TOKEN_EXPIRATION = 500;//ms
 let ROOT_DIR = "/home/kim/data/abouchereau/files/SecureMusicPlayer";
 const app = express();
 const corsOptions = {
-    origin: ["https://player.lasaugrenue.fr","http://localhost:8123", "https://www.lasaugrenue.fr"],
-      credentials: true, // <== ✅ Autorise les cookies / headers
+  origin: ["https://player.lasaugrenue.fr","http://localhost:8123", "https://www.lasaugrenue.fr"],
+  credentials: true, 
   optionsSuccessStatus: 200,
   exposedHeaders: ['Accept-Ranges', 'Content-Range', 'Content-Length'],
-  allowedHeaders: ['Range', 'Content-Type', 'Authorization'], // <== ✅ Ajoute Range ici
-  methods: ['GET', 'OPTIONS'] // <== utile pour preflight
+  allowedHeaders: ['Range', 'Content-Type', 'Authorization'], 
+  methods: ['GET', 'OPTIONS'] 
 };
 
 app.use(cors(corsOptions));
