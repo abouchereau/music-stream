@@ -11,7 +11,7 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
     console.log("URL",url.pathname);
-  if (url.pathname.startsWith('/stream')) {
+  if (url.pathname.startsWith('/api/stream')) {
     event.respondWith(handleProtectedAudio(req));
   }
 });
@@ -34,7 +34,7 @@ async function handleProtectedAudio(originalRequest) {
 
     let url = new URL(originalRequest.url);
     console.log("handleProtectedAudio", url);
-    const API_URL = "https://node-player.lasaugrenue.fr"; 
+    const API_URL = "/api"; 
     const tokenResp = await fetch(API_URL+"/token",{
       method: 'GET',
       headers,          
