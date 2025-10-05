@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>La Saugrenue Player</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">    
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
   <link rel="icon" href="/images/logo_favicon.png" sizes="any">
   <style>
@@ -36,7 +38,7 @@
   <script>
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
+      navigator.serviceWorker.register('/service-worker.js?t='+Date.now())
         .then(reg => console.log('SW registered', reg))
         .catch(err => console.error('SW reg failed', err));
     }

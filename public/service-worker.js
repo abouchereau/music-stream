@@ -17,7 +17,7 @@ self.addEventListener('fetch', event => {
 
 
 async function handleProtectedAudio(originalRequest) {
-    console.log("handleProtectedAudio");
+    console.log("handleProtectedAudio", originalRequest );
   try {
     let url = new URL(originalRequest.url);
     console.log("handleProtectedAudio", url);
