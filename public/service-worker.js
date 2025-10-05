@@ -26,8 +26,8 @@ async function handleProtectedAudio(originalRequest) {
     console.log("tokenResp",tokenResp);
     const tokenStr = await tokenResp.text();
     console.log("tokenStr",tokenStr);
-    url = url.replace("/stream/", "/stream/"+tokenStr+"/");
-    console.log("new URL",url);
+    let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/");
+    console.log("new URL",newUrl);
     const headers = {};
     if (originalRequest.headers.has('range')) {
       headers['range'] = originalRequest.headers.get('range');
@@ -35,7 +35,7 @@ async function handleProtectedAudio(originalRequest) {
     if (originalRequest.headers.has('accept')) {
       headers['accept'] = originalRequest.headers.get('accept');
     }
-    const resp = await fetch(url, {
+    const resp = await fetch(newUrl, {
       method: 'GET',
       headers,
     });
