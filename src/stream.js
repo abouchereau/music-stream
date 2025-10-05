@@ -16,7 +16,8 @@ let ROOT_DIR = "/home/kim/data/abouchereau/files/SecureMusicPlayer";
 const app = express();
 const corsOptions = {
     origin: ["https://player.lasaugrenue.fr","http://localhost:8123", "https://www.lasaugrenue.fr"],
-    optionsSuccessStatus: 200 
+    optionsSuccessStatus: 200,
+    exposedHeaders: ['Accept-Ranges', 'Content-Range', 'Content-Length']
 };
 
 app.use(cors(corsOptions));
