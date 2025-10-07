@@ -163,6 +163,22 @@ app.get('/api/tracks/:playlistDir', async (req, res) => {
   }
 });
 
+app.get("/api/:playlistDir/style.css", (req, res) => {
+  const cssPath = ROOT_DIR+"/"+req.params.playlistDir.trim()+"/style.css";
+
+  // Lire le fichier de manière asynchrone
+  fs.readFile(cssPath, "utf8", (err, data) => {
+    if (err) {
+      return res.status(404).send("File not found");
+    }
+
+    // Définir l’en-tête MIME pour les fichiers CSS
+    res.setHeader("Content-Type", "text/css");
+    res.send(data);
+  });
+});
+
+
 http.createServer({}, app).listen(PORT, function(){
     console.log("Express server listening on port " + PORT);
 });
