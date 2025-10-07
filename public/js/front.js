@@ -72,7 +72,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   loadTrackList();
-  document.head.innerHTML += '<link rel="stylesheet" href="api/'+playlistDir+'/styles.css" type="text/css"/>';
+  document.head.innerHTML += '<link rel="stylesheet" href="api/'+playlistDir+'/style.css" type="text/css"/>';
 
 }, false);
 
