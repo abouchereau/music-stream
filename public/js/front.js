@@ -72,6 +72,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   loadTrackList();
+  document.head.innerHTML += '<link rel="stylesheet" href="api/'+playlistDir+'/styles.css" type="text/css"/>';
+
 }, false);
 
     player.on('ended', () => {
