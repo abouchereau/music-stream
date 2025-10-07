@@ -11,7 +11,9 @@
     }
 
     const API_URL = "/api"; 
-    const player = new Plyr('#player');
+    const player = new Plyr('#player',{
+        controls: ['play-large', 'progress', 'current-time', 'mute']
+    });
     const playlist = document.getElementById('playlist');
     let current = 0;
     let tracks = [];
