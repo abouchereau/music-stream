@@ -166,6 +166,7 @@ app.get('/api/tracks/:playlistDir', async (req, res) => {
 app.get("/api/:playlistDir/style.css", (req, res) => {
   const cssPath = ROOT_DIR+"/"+req.params.playlistDir.trim()+"/style.css";
 
+ console.log(cssPath, fs.existsSync(cssPath));
   // Lire le fichier de manière asynchrone
   fs.readFile(cssPath, "utf8", (err, data) => {
     if (err) {
