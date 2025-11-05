@@ -13,7 +13,7 @@ self.addEventListener('fetch', event => {
     console.log("URL",url.pathname);
   if (url.pathname.startsWith('/api/stream')) {
     let tmp1 = url.pathname.split('/api/stream');
-    let tmp2 = tmp[1].split("/");
+    let tmp2 = tmp1[1].split("/");
     if (tmp2.length > 4) {
       return;
     }      
