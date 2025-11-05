@@ -63,20 +63,20 @@
     window.onerror = logError;
 
     // Capture les erreurs de ressources (images, scripts, etc.)
-    window.addEventListener('error', function (event) {
+ /*   window.addEventListener('error', function (event) {
       if (event.target !== window) {
         const msg = `Erreur de ressource : ${event.target.tagName} - ${event.target.src || event.target.href}\n\n`;
         console.error(msg);
         errorLog.textContent += msg;
       }
-    }, true);
+    }, true)
 
     // Capture les promesses non gérées
     window.addEventListener('unhandledrejection', function (event) {
       const msg = `Erreur de promesse non gérée : ${event.reason}\n\n`;
-      console.error(msg);
+     // console.error(msg);
       errorLog.textContent += msg;
-    });
+    });;*/
 
   </script>
 </body>
