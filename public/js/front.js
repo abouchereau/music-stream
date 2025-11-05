@@ -10,6 +10,7 @@
         .catch(err => console.error('SW reg failed', err));
     }
     const API_URL = "/api"; 
+    const PROXY_URL = "/proxy"; 
     const player = new Plyr('#player',{
         controls: ['play', 'progress', 'current-time', 'mute']
     });
@@ -26,7 +27,7 @@
       const curLi = Array.from(items).find(li => li.dataset.index==index)
       curLi.classList.add('active');
 
-        const urlAudio = API_URL+"/stream/"+playlistDir+"/"+index;
+        const urlAudio = PROXY_URL+"/stream/"+playlistDir+"/"+index;
       player.source = {
         type: 'audio',
         sources: [
