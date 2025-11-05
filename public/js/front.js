@@ -36,7 +36,11 @@
       };
       current = index;
         if (index != 0) {
-          player.play();
+          player.play()
+              .then(() => true)
+              .catch(() => {
+                  current =-2;//arrete tout
+              });
         }
     }
 
@@ -78,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     player.on('ended', () => {    
       const next = (current + 1);        
-        if (next < tracks.length) {
+        if (next > 0 && next < tracks.length) {
           loadTrack(next);
         }
     });
