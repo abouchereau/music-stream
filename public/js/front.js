@@ -12,8 +12,7 @@
     const API_URL = "/api"; 
     const PROXY_URL = "/proxy"; 
     const player = new Plyr('#player',{
-        controls: ['play', 'progress', 'current-time', 'mute'],
-        speed: { selected: 0.5}
+        controls: ['play', 'progress', 'current-time', 'mute']
     });
 
 
