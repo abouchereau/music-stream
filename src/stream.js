@@ -72,12 +72,6 @@ app.get('/api/stream/:token/:playlist/:index', (req, res) => {
   // Support des requêtes Range (permet le seek)
   const range = req.headers.range;
 
-  res.set({
-  'Access-Control-Allow-Origin': 'https://player.lasaugrenue.fr',
-  'Access-Control-Allow-Credentials': 'true',  
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Expose-Headers': 'Accept-Ranges, Content-Range, Content-Length'
-});
   if (range) {
     const parts = range.replace(/bytes=/, "").split("-");
     const start = parseInt(parts[0], 10);
@@ -88,6 +82,10 @@ app.get('/api/stream/:token/:playlist/:index', (req, res) => {
     }
     const chunkSize = (end - start) + 1;
     res.writeHead(206, {
+     'Access-Control-Allow-Origin': 'https://player.lasaugrenue.fr',
+    'Access-Control-Allow-Credentials': 'true',  
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Expose-Headers': 'Accept-Ranges, Content-Range, Content-Length',
       'Content-Range': `bytes ${start}-${end}/${total}`,
       'Accept-Ranges': 'bytes',
       'Content-Length': chunkSize,
@@ -104,10 +102,14 @@ app.get('/api/stream/:token/:playlist/:index', (req, res) => {
   } else {
     // Envoi complet
     res.writeHead(200, {
+          'Access-Control-Allow-Origin': 'https://player.lasaugrenue.fr',
+    'Access-Control-Allow-Credentials': 'true',  
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Expose-Headers': 'Accept-Ranges, Content-Range, Content-Length',
       'Content-Length': total,
       'Content-Type': 'audio/mpeg',
       'Accept-Ranges': 'bytes',
-      'Content-Disposition': 'inline; filename="audio',
+      'Content-Disposition': 'inline; filename="audio"',
       'Cache-Control': 'no-store'
     });
     const stream = fs.createReadStream(filePath);
