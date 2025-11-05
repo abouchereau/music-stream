@@ -21,7 +21,7 @@ self.addEventListener('fetch', event => {
 
 
 async function handleProtectedAudio(originalRequest) {
-    console.log("handleProtectedAudio", originalRequest );
+    //console.log("handleProtectedAudio", originalRequest );
   try {
 
     const headers = {};
@@ -54,7 +54,7 @@ async function handleProtectedAudio(originalRequest) {
    return new Response(backendResp.body, {
       status: backendResp.status,
       statusText: backendResp.statusText,
-      headers: headers
+      headers: backendResp.headers
     });
     
   /*  const resp = await fetch(newUrl, {
