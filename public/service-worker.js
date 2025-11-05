@@ -30,12 +30,12 @@ async function handleProtectedAudio(originalRequest) {
     if (originalRequest.headers.has('range')) {
       headers['range'] = originalRequest.headers.get('range');
     }
-/*    if (originalRequest.headers.has('accept')) {
+    if (originalRequest.headers.has('accept')) {
       headers['accept'] = originalRequest.headers.get('accept');
     }    
     if (originalRequest.headers.has('authorization')) {
       headers['authorization'] = originalRequest.headers.get('authorization');
-    }*/
+    }
 
     let url = new URL(originalRequest.url);
  //   console.log("handleProtectedAudio", url);
@@ -50,18 +50,12 @@ async function handleProtectedAudio(originalRequest) {
   //  console.log("new URL",newUrl);
 
   const backendResp = await fetch(newUrl, { headers });
-    
-const newHeaders = new Headers();
-for (const [key, value] of backendResp.headers.entries()) {
-  // Évite certains headers interdits ou problématiques
-  if (!['content-encoding', 'transfer-encoding'].includes(key.toLowerCase())) {
-    newHeaders.append(key, value);
-  }
+
 }
    return new Response(backendResp.body, {
       status: backendResp.status,
       statusText: backendResp.statusText,
-      headers: newHeaders
+      headers: headers
     });
     
   /*  const resp = await fetch(newUrl, {
