@@ -35,7 +35,9 @@
         ]
       };
       current = index;
-      player.play();
+        if (index != 0) {
+          player.play();
+        }
     }
 
 
