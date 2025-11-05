@@ -43,7 +43,7 @@ async function handleProtectedAudio(originalRequest) {
     console.log("tokenResp",tokenResp);
     const tokenStr = await tokenResp.text();
     console.log("tokenStr",tokenStr);
-    let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/");
+    let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/music/", "/api/");
     console.log("new URL",newUrl);
     
     const resp = await fetch(newUrl, {
