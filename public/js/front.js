@@ -5,7 +5,7 @@
     } 
  
  if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js?v=0.6',{scope: '/'+playlistDir})
+      navigator.serviceWorker.register('/service-worker.js?v=0.7',{scope: '/'+playlistDir})
         .then(reg => console.log('SW registered', reg))
         .catch(err => console.error('SW reg failed', err));
     }
