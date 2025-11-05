@@ -49,9 +49,8 @@ async function handleProtectedAudio(originalRequest) {
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
   //  console.log("new URL",newUrl);
 
-  //const backendResp = await fetch(newUrl, { headers });
 
-const response = await fetch(newUrl, { method: 'GET', headers });
+const backendResp = await fetch(newUrl, { headers });
 
    return new Response(backendResp.body, {
       status: backendResp.status,
