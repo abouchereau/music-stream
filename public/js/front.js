@@ -14,6 +14,12 @@
     const player = new Plyr('#player',{
         controls: ['play', 'progress', 'current-time', 'mute']
     });
+
+    player.elements.media.addEventListener('error', e => {
+      console.warn('Erreur audio détectée :', e);
+      player.stop();
+    });
+
     const playlist = document.getElementById('playlist');
     let current = 0;
     let tracks = [];
