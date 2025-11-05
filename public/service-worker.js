@@ -52,22 +52,13 @@ async function handleProtectedAudio(originalRequest) {
   //const backendResp = await fetch(newUrl, { headers });
 
 const response = await fetch(newUrl, { method: 'GET', headers });
-const blob = await response.blob(); // télécharge tout le flux
-return new Response(blob, {
-  headers: { 'Content-Type': 'audio/mpeg' }
-});
-    /*
+
    return new Response(backendResp.body, {
       status: backendResp.status,
       statusText: backendResp.statusText,
       headers: backendResp.headers
-    });*/
-    
-  /*  const resp = await fetch(newUrl, {
-      method: 'GET',
-      headers
     });
-    return resp;*/
+
   } catch (err) {
     return new Response('Service worker error', { status: 500 });
   }
