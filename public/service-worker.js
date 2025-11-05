@@ -14,7 +14,7 @@ self.addEventListener('fetch', event => {
   if (url.pathname.startsWith('/api/stream')) {
     let tmp1 = url.split('/api/stream');
     let tmp2 = tmp[1].split("/");
-    if (tmp2.length > 3) {
+    if (tmp2.length > 4) {
       return;
     }      
     event.respondWith(handleProtectedAudio(req));
