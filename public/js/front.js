@@ -61,7 +61,7 @@
             <div><strong>${track.title}</strong> – ${track.artist || 'Inconnu'}</div>
             <div class="track-meta">${formatDuration(track.duration)}</div>
           `;
-          li.addEventListener('click', e => loadTrack(e.currentTarget.dataset.index));
+          li.addEventListener('click', e => loadTrack(Number(e.currentTarget.dataset.index)));
           playlist.appendChild(li);
         });
         // Charger la première piste
