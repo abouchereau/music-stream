@@ -49,13 +49,19 @@ async function handleProtectedAudio(originalRequest) {
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
   //  console.log("new URL",newUrl);
 
-  const backendResp = await fetch(newUrl, { headers });
+  //const backendResp = await fetch(newUrl, { headers });
 
+const response = await fetch(newUrl, { method: 'GET', headers });
+const blob = await response.blob(); // télécharge tout le flux
+return new Response(blob, {
+  headers: { 'Content-Type': 'audio/mpeg' }
+});
+    /*
    return new Response(backendResp.body, {
       status: backendResp.status,
       statusText: backendResp.statusText,
       headers: backendResp.headers
-    });
+    });*/
     
   /*  const resp = await fetch(newUrl, {
       method: 'GET',
