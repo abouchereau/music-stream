@@ -11,11 +11,6 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
     console.log("URL",url.pathname);
-  
-if (url.pathname.startsWith('/api/token')) {
-    return;
-  }
-  
   if (url.pathname.startsWith('/music/stream')) {
     event.respondWith(handleProtectedAudio(req));
   }
