@@ -21,7 +21,7 @@
     let current = 0;
     let tracks = [];
 
-    const loadTrack = async (index) => {
+    const loadTrack = async (index, forcePlay =false) => {
       const items = playlist.querySelectorAll('li');
       items.forEach(li => li.classList.remove('active'));
       const curLi = Array.from(items).find(li => li.dataset.index==index)
@@ -38,7 +38,7 @@
         ]
       };
       current = index;
-        if (index != 0) {
+        if (index != 0 || forcePlay) {
           player.play()
               .catch((err) => {
                   console.warn('Impossible de lire ce morceau :', err);
@@ -69,7 +69,7 @@
             <div><strong>${track.title}</strong> – ${track.artist || 'Inconnu'}</div>
             <div class="track-meta">${formatDuration(track.duration)}</div>
           `;
-          li.addEventListener('click', e => loadTrack(Number(e.currentTarget.dataset.index)));
+          li.addEventListener('click', e => loadTrack(Number(e.currentTarget.dataset.index), true));
           playlist.appendChild(li);
         });
         // Charger la première piste
