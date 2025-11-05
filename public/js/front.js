@@ -45,7 +45,9 @@
 
     // Quand la piste se termine → jouer la suivante
     player.on('ended', () => {
-      loadTrack((current + 1) % items.length);
+        if (current+1 < items.length) {
+          loadTrack((current + 1) % items.length);
+        }
     });
 
 
