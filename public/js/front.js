@@ -39,8 +39,10 @@
           player.play()
               .then(() => true)
               .catch(() => {
-                  current =-2;//arrete tout
-              });
+                  console.warn('Impossible de lire ce morceau :', err);
+                  // Empêche la boucle
+                  player.stop();
+            });
         }
     }
 
