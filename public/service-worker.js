@@ -7,10 +7,10 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  console.log("SW FETCH")
+  //console.log("SW FETCH")
   const req = event.request;
   const url = new URL(req.url);
-    console.log("URL",url.pathname);
+    //console.log("URL",url.pathname);
   if (url.pathname.startsWith('/proxy/stream')) {  
     event.respondWith(handleProtectedAudio(req));
   }
@@ -35,16 +35,16 @@ async function handleProtectedAudio(originalRequest) {
     }*/
 
     let url = new URL(originalRequest.url);
-    console.log("handleProtectedAudio", url);
+ //   console.log("handleProtectedAudio", url);
     const API_URL = "/api"; 
     const tokenResp = await fetch(API_URL+"/token",{
       method: 'GET'    
     });
-    console.log("tokenResp",tokenResp);
+   // console.log("tokenResp",tokenResp);
     const tokenStr = await tokenResp.text();
-    console.log("tokenStr",tokenStr);
+ //   console.log("tokenStr",tokenStr);
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
-    console.log("new URL",newUrl);
+  //  console.log("new URL",newUrl);
 
   const backendResp = await fetch(newUrl, { headers });
 
