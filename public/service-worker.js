@@ -11,7 +11,12 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
     console.log("URL",url.pathname);
-  if (url.pathname.startsWith('/music/stream')) {
+  if (url.pathname.startsWith('/api/stream')) {
+    let tmp1 = url.split('/api/stream');
+    let tmp2 = tmp[1].split("/");
+    if (tmp2.length > 3) {
+      return;
+    }      
     event.respondWith(handleProtectedAudio(req));
   }
 });
@@ -43,7 +48,7 @@ async function handleProtectedAudio(originalRequest) {
     console.log("tokenResp",tokenResp);
     const tokenStr = await tokenResp.text();
     console.log("tokenStr",tokenStr);
-    let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/music/", "/api/");
+    let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/");
     console.log("new URL",newUrl);
     
     const resp = await fetch(newUrl, {
