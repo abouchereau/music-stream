@@ -6,7 +6,6 @@
  
  if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js?v=0.11',{scope: '/'+playlistDir})
-        .then(reg => console.log('SW registered', reg))
         .catch(err => console.error('SW reg failed', err));
     }
     const API_URL = "/api"; 
