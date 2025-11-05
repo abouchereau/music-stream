@@ -15,10 +15,7 @@
         controls: ['play', 'progress', 'current-time', 'mute']
     });
 
-    player.elements.media.addEventListener('error', e => {
-      console.warn('Erreur audio détectée :', e);
-      player.stop();
-    });
+
 
     const playlist = document.getElementById('playlist');
     let current = 0;
@@ -31,11 +28,13 @@
       const curLi = Array.from(items).find(li => li.dataset.index==index)
       curLi.classList.add('active');
 
+        const urlAudio = API_URL+"/stream/"+playlistDir+"/"+index;
+        console.log(urlAudio);
       player.source = {
         type: 'audio',
         sources: [
           {
-            src: API_URL+"/stream/"+/*(await token.text())+"/"+*/playlistDir+"/"+index,
+            src: urlAudio,
             type: 'audio/mpeg'
           }
         ]
