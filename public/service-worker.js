@@ -11,12 +11,7 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
     console.log("URL",url.pathname);
-  if (url.pathname.startsWith('/api/stream')) {
-    let tmp1 = url.pathname.split('/api/stream');
-    let tmp2 = tmp1[1].split("/");
-    if (tmp2.length > 4) {
-      return;
-    }      
+  if (url.pathname.startsWith('/proxy/stream')) {  
     event.respondWith(handleProtectedAudio(req));
   }
 });
@@ -32,12 +27,12 @@ async function handleProtectedAudio(originalRequest) {
     if (originalRequest.headers.has('range')) {
       headers['range'] = originalRequest.headers.get('range');
     }
-    if (originalRequest.headers.has('accept')) {
+/*    if (originalRequest.headers.has('accept')) {
       headers['accept'] = originalRequest.headers.get('accept');
     }    
     if (originalRequest.headers.has('authorization')) {
       headers['authorization'] = originalRequest.headers.get('authorization');
-    }
+    }*/
 
     let url = new URL(originalRequest.url);
     console.log("handleProtectedAudio", url);
@@ -48,14 +43,22 @@ async function handleProtectedAudio(originalRequest) {
     console.log("tokenResp",tokenResp);
     const tokenStr = await tokenResp.text();
     console.log("tokenStr",tokenStr);
-    let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/");
+    let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
     console.log("new URL",newUrl);
+
+  const backendResp = await fetch(newUrl, { headers });
+
+   return new Response(backendResp.body, {
+      status: backendResp.status,
+      statusText: backendResp.statusText,
+      headers: backendResp.headers
+    });
     
-    const resp = await fetch(newUrl, {
+  /*  const resp = await fetch(newUrl, {
       method: 'GET',
       headers
     });
-    return resp;
+    return resp;*/
   } catch (err) {
     return new Response('Service worker error', { status: 500 });
   }
