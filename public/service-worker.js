@@ -16,7 +16,7 @@ if (url.pathname.startsWith('/api/token')) {
     return;
   }
   
-  if (url.pathname.startsWith('/api/stream')) {
+  if (url.pathname.startsWith('/music/stream')) {
     event.respondWith(handleProtectedAudio(req));
   }
 });
