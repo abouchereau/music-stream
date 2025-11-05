@@ -71,7 +71,7 @@ app.get('/api/stream/:token/:playlist/:index', (req, res) => {
   const total = stat.size;
   // Support des requêtes Range (permet le seek)
   const range = req.headers.range;
-
+delete req.headers.range;
   if (false) {//range) {
     const parts = range.replace(/bytes=/, "").split("-");
     const start = parseInt(parts[0], 10);
@@ -107,7 +107,8 @@ app.get('/api/stream/:token/:playlist/:index', (req, res) => {
           'Access-Control-Allow-Origin': 'https://player.lasaugrenue.fr',
     'Access-Control-Allow-Credentials': 'true',  
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Access-Control-Expose-Headers': 'Accept-Ranges, Content-Range, Content-Length',     
+    //'Access-Control-Expose-Headers': 'Accept-Ranges, Content-Range, Content-Length',     
+     'Access-Control-Expose-Headers': ' Content-Length',     
   'Content-Transfer-Encoding': 'binary',
       'Content-Length': total,
       'Content-Type': 'audio/mpeg',
