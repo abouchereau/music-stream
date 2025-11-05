@@ -76,8 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 }, false);
 
-    player.on('ended', () => {        
+    player.on('ended', () => {    
       const next = (current + 1);
+        
+        console.log("ENDED", next, tracks.length);
         if (next < tracks.length) {
           loadTrack(next);
         }
