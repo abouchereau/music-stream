@@ -47,11 +47,18 @@ async function handleProtectedAudio(originalRequest) {
   //  console.log("new URL",newUrl);
 
   const backendResp = await fetch(newUrl, { headers });
-
+    
+const newHeaders = new Headers();
+for (const [key, value] of backendResp.headers.entries()) {
+  // Évite certains headers interdits ou problématiques
+  if (!['content-encoding', 'transfer-encoding'].includes(key.toLowerCase())) {
+    newHeaders.append(key, value);
+  }
+}
    return new Response(backendResp.body, {
       status: backendResp.status,
       statusText: backendResp.statusText,
-      headers: backendResp.headers
+      headers: newHeaders
     });
     
   /*  const resp = await fetch(newUrl, {
