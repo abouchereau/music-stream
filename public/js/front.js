@@ -40,7 +40,7 @@
       current = index;
         if (index != 0) {
           player.play()
-              .catch(() => {
+              .catch((err) => {
                   console.warn('Impossible de lire ce morceau :', err);
                   // Empêche la boucle
                   player.stop();
