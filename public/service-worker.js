@@ -51,7 +51,6 @@ async function handleProtectedAudio(originalRequest) {
 
   const backendResp = await fetch(newUrl, { headers });
 
-}
    return new Response(backendResp.body, {
       status: backendResp.status,
       statusText: backendResp.statusText,
