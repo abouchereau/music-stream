@@ -43,12 +43,6 @@
 
 
 
-    // Quand la piste se termine → jouer la suivante
-    player.on('ended', () => {
-        if (current+1 < items.length) {
-          loadTrack((current + 1) % items.length);
-        }
-    });
 
 
   const loadTrackList = async () => {
@@ -82,9 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 }, false);
 
-    player.on('ended', () => {
+    player.on('ended', () => {        
       const next = (current + 1) % tracks.length;
-      loadTrack(next);
+        if (next < tracks.length) {
+          loadTrack(next);
+        }
     });
 
     function formatDuration(sec) {
