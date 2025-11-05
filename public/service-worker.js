@@ -21,12 +21,9 @@ self.addEventListener('fetch', event => {
 
 
 async function handleProtectedAudio(originalRequest) {
-    //console.log("handleProtectedAudio", originalRequest );
   try {
 
     const headers = {};
-
-    console.log(originalRequest.headers);
     if (originalRequest.headers.has('range')) {
       headers['range'] = originalRequest.headers.get('range');
     }
@@ -38,19 +35,12 @@ async function handleProtectedAudio(originalRequest) {
     }
 
     let url = new URL(originalRequest.url);
- //   console.log("handleProtectedAudio", url);
     const API_URL = "/api"; 
-    const tokenResp = await fetch(API_URL+"/token",{
-      method: 'GET'    
-    });
-   // console.log("tokenResp",tokenResp);
+    const tokenResp = await fetch(API_URL+"/token",{ method: 'GET'});
     const tokenStr = await tokenResp.text();
- //   console.log("tokenStr",tokenStr);
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
-  //  console.log("new URL",newUrl);
 
-
-const backendResp = await fetch(newUrl, { headers });
+    const backendResp = await fetch(newUrl, { headers });
 
    return new Response(backendResp.body, {
       status: backendResp.status,
