@@ -77,9 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }, false);
 
     player.on('ended', () => {    
-      const next = (current + 1);
-        
-        console.log("ENDED", next, tracks.length);
+      const next = (current + 1);        
         if (next < tracks.length) {
           loadTrack(next);
         }
