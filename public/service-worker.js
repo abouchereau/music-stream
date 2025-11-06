@@ -1,6 +1,6 @@
 const BASE62_ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const CACHE_NAME = 'forbidden-zone';
-const cache;
+let cache = null;
 
 self.addEventListener('install', event => {
   event.waitUntil(self.skipWaiting());
