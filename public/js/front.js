@@ -97,3 +97,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const s = Math.floor(sec % 60);
       return `${m}:${s.toString().padStart(2, '0')}`;
     }
+
+
+const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+function toBase62(num) {
+  if (num === 0) return ALPHABET[0];
+  let result = '';
+  const base = ALPHABET.length;
+
+  while (num > 0) {
+    const remainder = num % base;
+    result = ALPHABET[remainder] + result;
+    num = Math.floor(num / base);
+  }
+
+  return result;
+}
