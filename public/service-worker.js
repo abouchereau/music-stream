@@ -28,7 +28,7 @@ self.addEventListener('fetch', event => {
     console.log("REFERRER", event.request.referrer);
     fetch(API_URL+"/test",{ method: 'GET'});
     
-    event.respondWith(return new Response('Hello from SW', {
+    event.respondWith(new Response('Hello from SW', {
         status: 200,
         statusText: 'ok',
         headers: { 'Content-Type': 'text/plain' }
