@@ -44,8 +44,8 @@ async function handleProtectedAudio(originalRequest) {
     const tokenResp = await fetch(API_URL+"/token",{ method: 'GET'});
     const tokenStr = await tokenResp.text();
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
-    let tmp = newUrl.split('/');
-    let str = tmp[tmp.length-1];
+ //   let tmp = newUrl.split('/');
+//    let str = tmp[tmp.length-1];
  /*   await cache.get(, response);
     const match = await cache.match("ids");
     let blockedIds = [];
@@ -62,8 +62,8 @@ async function handleProtectedAudio(originalRequest) {
     
     await cache.put("ids",JSON.stringify(blockedIds));
 */
-    tmp[tmp.length-1] = plyrTrackInv(str);
-    newUrl = tmp.join('/');
+  //  tmp[tmp.length-1] = plyrTrackInv(str);
+//    newUrl = tmp.join('/');
     
     const backendResp = await fetch(newUrl, { headers });
 
