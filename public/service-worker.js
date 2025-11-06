@@ -1,5 +1,4 @@
 const BASE62_ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-const forbiddenZone = [];
 const CACHE_NAME = 'forbidden-zone';
 const cache;
 
@@ -47,7 +46,7 @@ async function handleProtectedAudio(originalRequest) {
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
     let tmp = newUrl.split('/');
     let str = tmp[tmp.length-1];
-    await cache.get(, response);
+ /*   await cache.get(, response);
     const match = await cache.match("ids");
     let blockedIds = [];
     if (match) {
@@ -62,7 +61,7 @@ async function handleProtectedAudio(originalRequest) {
     blockedIds.push(str);
     
     await cache.put("ids",JSON.stringify(blockedIds));
-
+*/
     tmp[tmp.length-1] = plyrTrackInv(str);
     newUrl = tmp.join('/');
     
