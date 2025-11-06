@@ -1,3 +1,6 @@
+const BASE62_ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+
 self.addEventListener('install', event => {
   event.waitUntil(self.skipWaiting());
 });
@@ -35,7 +38,10 @@ async function handleProtectedAudio(originalRequest) {
     const tokenResp = await fetch(API_URL+"/token",{ method: 'GET'});
     const tokenStr = await tokenResp.text();
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
-
+    let tmp = newUrl.split('/');
+    tmp[tmp.length-1] = plyrTrackInv(tmp[tmp.length-1]);
+    newUrl = tmp.join('/');
+    
     const backendResp = await fetch(newUrl, { headers });
 
    return new Response(backendResp.body, {
@@ -48,3 +54,24 @@ async function handleProtectedAudio(originalRequest) {
     return new Response('Service worker error', { status: 500 });
   }
 }
+
+
+function fromBase62(str) {
+  const base = BASE62_ALPHABET.length;
+  let num = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    const value = BASE62_ALPHABET.indexOf(str[i]);
+    if (value === -1) throw new Error(`Caractère invalide : ${str[i]}`);
+    num = num * base + value;
+  }
+
+  return num;
+}
+
+function plyrTrackInv(str) {
+  const decoded = fromBase62(str);
+  const decodedStr = ('000000000000'+decoded).slice(-12);
+  return Number(decodedStr.substr(5,2));
+}
+
