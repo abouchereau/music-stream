@@ -26,7 +26,7 @@ self.addEventListener('fetch', event => {
 
   if (url.pathname.startsWith('/test')) {  
     console.log("REFERRER", event.request.referrer);
-    fetch(API_URL+"/test",{ method: 'GET'});
+    fetch("/test",{ method: 'GET'});
     
     event.respondWith(new Response('Hello from SW', {
         status: 200,
