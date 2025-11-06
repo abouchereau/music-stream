@@ -6,7 +6,7 @@ self.addEventListener('install', event => {
   event.waitUntil(self.skipWaiting());
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', async event => {
   event.waitUntil(async ()=>{
     self.clients.claim();
     const cacheNames = await caches.keys();
@@ -15,7 +15,7 @@ self.addEventListener('activate', event => {
   })
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch',async event => {
   console.log(event);
   const req = event.request;
   const url = new URL(req.url);
@@ -26,7 +26,7 @@ self.addEventListener('fetch', event => {
 
   if (url.pathname.startsWith('/test')) {  
     console.log("REFERRER", event.request.referrer);
-    fetch("/test",{ method: 'GET'});
+    await fetch("/test",{ method: 'GET'});
     
     event.respondWith(new Response('Hello from SW', {
         status: 200,
