@@ -1,35 +1,11 @@
 
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-function toBase62(num) {
-  if (num === 0) return ALPHABET[0];
-  let result = '';
-  const base = ALPHABET.length;
-
-  while (num > 0) {
-    const remainder = num % base;
-    result = ALPHABET[remainder] + result;
-    num = Math.floor(num / base);
-  }
-
-  return result;
-}
-
-function plyrTrack(track) {
-    const prefix = ('00000'+Math.floor(100000*Math.random())).slice(-5);
-    const suffix = ('00000'+Math.floor(100000*Math.random())).slice(-5);
-    const trackStr = ('00'+track).slice(-2);
-    return toBase62(Number(prefix+trackStr+suffix));
-}
-    
-
 let playlistDir = window.location.pathname.slice(1);
     if(playlistDir == "") {
       playlistDir = "%20";
     } 
  
  if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js?v=0.15',{scope: '/'+playlistDir})
+      navigator.serviceWorker.register('/service-worker.js?v=0.16',{scope: '/'+playlistDir})
         .catch(err => console.error('SW reg failed', err));
     }
     const API_URL = "/api"; 
