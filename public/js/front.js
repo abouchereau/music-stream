@@ -29,7 +29,7 @@ let playlistDir = window.location.pathname.slice(1);
     } 
  
  if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js?v=0.14',{scope: '/'+playlistDir})
+      navigator.serviceWorker.register('/service-worker.js?v=0.15',{scope: '/'+playlistDir})
         .catch(err => console.error('SW reg failed', err));
     }
     const API_URL = "/api"; 
@@ -51,7 +51,7 @@ let playlistDir = window.location.pathname.slice(1);
       const curLi = Array.from(items).find(li => li.dataset.index==index)
       curLi.classList.add('active');
 
-        const urlAudio = PROXY_URL+"/stream/"+playlistDir+"/"+plyrTrack(index);
+        const urlAudio = PROXY_URL+"/stream/"+playlistDir+"/"+index;
       player.source = {
         type: 'audio',
         sources: [
