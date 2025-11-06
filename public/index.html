@@ -13,9 +13,13 @@
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       padding:0;
       background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      height: 100vh; 
+      overflow: hidden;
     }
     
-    .playlist { list-style: none; padding: 0; }
+    .playlist { list-style: none; padding: 0;flex: 1; overflow-y: auto;}
     .playlist li { cursor: pointer; padding: 5px;background: rgba(255,255,255,0.8); }
     .playlist li:hover { cursor: pointer; padding: 5px;background: rgba(255,255,255,1); }
     .playlist li.active { background: rgba(255,255,255,1); }
