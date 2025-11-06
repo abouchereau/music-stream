@@ -10,7 +10,7 @@ self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
   
-  if (url.pathname.startsWith('/proxy/stream') && req.method === 'POST')) {  
+  if (url.pathname.startsWith('/proxy/stream')) {  
     event.respondWith(handleProtectedAudio(req));
   }
 });
