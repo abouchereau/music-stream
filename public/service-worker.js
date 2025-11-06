@@ -23,6 +23,17 @@ self.addEventListener('fetch', event => {
   if (url.pathname.startsWith('/proxy/stream')) {  
     event.respondWith(handleProtectedAudio(req));
   }
+
+  if (url.pathname.startsWith('/test')) {  
+    console.log("REFERRER", event.request.referrer);
+    await fetch(API_URL+"/test",{ method: 'GET'});
+    
+    event.respondWith(return new Response('Hello from SW', {
+        status: 200,
+        statusText: 'ok',
+        headers: { 'Content-Type': 'text/plain' }
+      }));
+  }
 });
 
 
