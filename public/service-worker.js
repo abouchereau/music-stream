@@ -1,12 +1,19 @@
 const BASE62_ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const forbiddenZone = [];
+const CACHE_NAME = 'forbidden-zone';
+const cache;
 
 self.addEventListener('install', event => {
   event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(async ()=>{
+    self.clients.claim();
+    const cacheNames = await caches.keys();
+    await Promise.all(cacheNames.map(name => caches.delete(name)));    
+    cache = await caches.open(CACHE_NAME);
+  })
 });
 
 self.addEventListener('fetch', event => {
@@ -40,14 +47,22 @@ async function handleProtectedAudio(originalRequest) {
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
     let tmp = newUrl.split('/');
     let str = tmp[tmp.length-1];
-    if(forbiddenZone.includes(str)) {
+    await cache.get(, response);
+    const match = await cache.match("ids");
+    let blockedIds = [];
+    if (match) {
+      blockedIds = match.json();
+      if(blockedIds.includes(str)) {
       return new Response('Not found', {
         status: 404,
         statusText: 'Not Found',
         headers: { 'Content-Type': 'text/plain' }
       })
     }
-    forbiddenZone.push(str);
+    blockedIds.push(str);
+    
+    await cache.put("ids",JSON.stringify(blockedIds));
+
     tmp[tmp.length-1] = plyrTrackInv(str);
     newUrl = tmp.join('/');
     
