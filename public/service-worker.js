@@ -1,5 +1,5 @@
 const BASE62_ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
+const forbiddenZone = [];
 
 self.addEventListener('install', event => {
   event.waitUntil(self.skipWaiting());
@@ -39,7 +39,16 @@ async function handleProtectedAudio(originalRequest) {
     const tokenStr = await tokenResp.text();
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/").replace("/proxy/", "/api/");
     let tmp = newUrl.split('/');
-    tmp[tmp.length-1] = plyrTrackInv(tmp[tmp.length-1]);
+    let str = tmp[tmp.length-1];
+    if(forbiddenZone.includes(str)) {
+      return new Response('Not found', {
+        status: 404,
+        statusText: 'Not Found',
+        headers: { 'Content-Type': 'text/plain' }
+      })
+    }
+    forbiddenZone.push(str);
+    tmp[tmp.length-1] = plyrTrackInv(str);
     newUrl = tmp.join('/');
     
     const backendResp = await fetch(newUrl, { headers });
