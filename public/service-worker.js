@@ -9,12 +9,12 @@ self.addEventListener('activate', async event => {
 self.addEventListener('fetch',async event => {
   const req = event.request;
   const url = new URL(req.url);
-  const client = event.clientId ? await self.clients.get(event.clientId) : null;
-/*
+ /* const client = event.clientId ? await self.clients.get(event.clientId) : null;
+
   if (!client) {
     return new Response('Forbidden', {status: 403, headers: {'Cache-Control': 'no-store'}});
   }
-*/
+
   const referrer = event.request.referrer || client.url || '';
   console.log("REFERRER", referrer);
   if (!referrer.startsWith('https://player.lasaugrenue.fr')) {
@@ -22,7 +22,7 @@ self.addEventListener('fetch',async event => {
     console.log("FORBIDDEN", referrer);
     return new Response('Forbidden', {status: 403, headers: {'Cache-Control': 'no-store'}});
   }
-
+*/
   if (url.pathname.startsWith('/proxy/stream')) {  
     event.respondWith(handleProtectedAudio(req));
   }
