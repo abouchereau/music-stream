@@ -18,6 +18,8 @@ self.addEventListener('fetch',async event => {
   const referrer = event.request.referrer || client.url || '';
   console.log("REFERRER", referrer);
   if (!referrer.startsWith('https://player.lasaugrenue.fr')) {
+    
+    console.log("FORBIDDEN", referrer);
     return new Response('Forbidden', {status: 403, headers: {'Cache-Control': 'no-store'}});
   }
 
