@@ -6,7 +6,7 @@ self.addEventListener('activate', async event => {
   event.waitUntil(self.clients.claim())
 });
 
-self.addEventListener('fetch',async event => {
+self.addEventListener('fetch', event => {
   const req = event.request;
   const url = new URL(req.url);
   const client = event.clientId ? await self.clients.get(event.clientId) : null;
