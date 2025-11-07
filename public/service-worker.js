@@ -46,9 +46,9 @@ console.log("2");
     const tokenStr = await tokenResp.text();
     let newUrl = url.href.replace("/stream/", "/stream/"+tokenStr+"/");
     
-console.log("3");
+console.log("3", newUrl);
     const backendResp = await fetch(newUrl, { headers });
-
+console.log("4", backendResp);
    return new Response(backendResp.body, {
       status: backendResp.status,
       statusText: backendResp.statusText,
