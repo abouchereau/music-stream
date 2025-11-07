@@ -11,7 +11,7 @@ self.addEventListener('activate', async event => {
 self.addEventListener('fetch',async event => {
   const req = event.request;
   const url = new URL(req.url);
-  const client = event.clientId ? await self.clients.get(event.clientId) : null;
+ /* const client = event.clientId ? await self.clients.get(event.clientId) : null;
 
   if (!client) {
     return new Response('Forbidden', {status: 403, headers: {'Cache-Control': 'no-store'}});
@@ -20,7 +20,7 @@ self.addEventListener('fetch',async event => {
   const referrer = event.request.referrer || client.url || '';
   if (!referrer.startsWith('https://player.lasaugrenue.fr')) {
     return new Response('Forbidden', {status: 403, headers: {'Cache-Control': 'no-store'}});
-  }
+  }*/
   
   if (url.pathname.startsWith('/proxy/stream')) {  
     event.respondWith(handleProtectedAudio(req));
@@ -60,24 +60,3 @@ async function handleProtectedAudio(originalRequest) {
     return new Response('Service worker error', { status: 500 });
   }
 }
-
-
-function fromBase62(str) {
-  const base = BASE62_ALPHABET.length;
-  let num = 0;
-
-  for (let i = 0; i < str.length; i++) {
-    const value = BASE62_ALPHABET.indexOf(str[i]);
-    if (value === -1) throw new Error(`Caractère invalide : ${str[i]}`);
-    num = num * base + value;
-  }
-
-  return num;
-}
-
-function plyrTrackInv(str) {
-  const decoded = fromBase62(str);
-  const decodedStr = ('000000000000'+decoded).slice(-12);
-  return Number(decodedStr.substr(5,2));
-}
-
