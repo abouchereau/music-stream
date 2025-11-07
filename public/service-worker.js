@@ -14,12 +14,18 @@ self.addEventListener('fetch',async event => {
   const client = event.clientId ? await self.clients.get(event.clientId) : null;
 
   if (!client) {
-    return new Response('Forbidden', { status: 403 });
+    return new Response('Forbidden', { status: 403,
+  headers: {
+    'Cache-Control': 'no-store'
+  } });
   }
 
   const referrer = event.request.referrer || client.url || '';
   if (!referrer.startsWith('https://player.lasaugrenue.fr')) {
-    return new Response('Forbidden', { status: 403 });
+    return new Response('Forbidden', { status: 403 ,
+  headers: {
+    'Cache-Control': 'no-store'
+  } });
   }
   
   if (url.pathname.startsWith('/proxy/stream')) {  
