@@ -14,8 +14,6 @@ self.addEventListener('fetch', event => {
     event.respondWith((async () => {
       const client = event.clientId ? await self.clients.get(event.clientId) : null;
       const referrer = event.request.referrer || client?.url || '';
-    console.log("CLIENT", client);
-      console.log("REFERRER", referrer);
       if (!client || !referrer.startsWith('https://player.lasaugrenue.fr')) {
         return new Response('Forbidden', { status: 403, headers: { 'Cache-Control': 'no-store' } });
       }
