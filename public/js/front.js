@@ -5,7 +5,7 @@ let playlistDir = window.location.pathname.slice(1);
     } 
  
  if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js?v=0.17',{scope: '/'+playlistDir})
+      navigator.serviceWorker.register('/service-worker.js?v=0.18',{scope: '/'+playlistDir})
         .catch(err => console.error('SW reg failed', err));
     }
     const API_URL = "/api"; 
