@@ -32,7 +32,6 @@
 <body>
   <h1></h1>
   <h2></h2>
-<button onclick="test()">test</button>
   <!-- Player -->
   <audio id="player"  controls controlsList="nodownload" oncontextmenu="return false;"></audio>
 
@@ -42,13 +41,5 @@
 
   <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
   <script src="/js/front.js"></script>
-  <script>
-    function test() {
-      fetch("/test", {
-              method: 'GET',
-              headers: {'Content-Type': 'application/json'}
-          });
-    }
-  </script>
 </body>
 </html>
