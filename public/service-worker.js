@@ -14,18 +14,12 @@ self.addEventListener('fetch',async event => {
   const client = event.clientId ? await self.clients.get(event.clientId) : null;
 
   if (!client) {
-    return new Response('Forbidden', { status: 403,
-  headers: {
-    'Cache-Control': 'no-store'
-  } });
+    return new Response('Forbidden', {status: 403, headers: {'Cache-Control': 'no-store'}});
   }
 
   const referrer = event.request.referrer || client.url || '';
   if (!referrer.startsWith('https://player.lasaugrenue.fr')) {
-    return new Response('Forbidden', { status: 403 ,
-  headers: {
-    'Cache-Control': 'no-store'
-  } });
+    return new Response('Forbidden', {status: 403, headers: {'Cache-Control': 'no-store'}});
   }
   
   if (url.pathname.startsWith('/proxy/stream')) {  
@@ -48,7 +42,6 @@ async function handleProtectedAudio(originalRequest) {
     if (originalRequest.headers.has('authorization')) {
       headers['authorization'] = originalRequest.headers.get('authorization');
     }
-    headers['x-from-sw'] = '1';
     let url = new URL(originalRequest.url);
     const API_URL = "/api"; 
     const tokenResp = await fetch(API_URL+"/token",{ method: 'GET'});
